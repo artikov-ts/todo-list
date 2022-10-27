@@ -1,62 +1,16 @@
-import React, { FC, ChangeEvent, useState } from "react";
+import React, { FC, useState } from "react";
 import "./App.css";
-import TodoTask from "./Components/TodoTask";
+import AddTask from "./Components/AddTask";
+import TodoList from "./Components/TodoList";
 import { ITask } from "./Interfaces";
 
 const App: FC = () => {
-  const [task, setTask] = useState<string>("");
-  const [deadline, setDeadline] = useState<number>(0);
   const [list, setList] = useState<ITask[]>([]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    if (e.target.name === "task") {
-      setTask(e.target.value);
-    } else {
-      setDeadline(Number(e.target.value));
-    }
-  };
-
-  const addTask = (): void => {
-    const newTask = { taskName: task, deadline: deadline };
-    setList([...list, newTask]);
-    setTask("");
-    setDeadline(0);
-  };
-
-  const completeTask = (taskNameToDelete: string): void => {
-    setList(
-      list.filter((task) => {
-        return task.taskName !== taskNameToDelete;
-      })
-    );
-  };
 
   return (
     <div className="App">
-      <div className="header">
-        <div className="input-container">
-          <input
-            type="text"
-            placeholder="Task..."
-            name="task"
-            value={task}
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            placeholder="Set deadline..."
-            name="deadline"
-            value={deadline}
-            onChange={handleChange}
-          />
-        </div>
-        <button onClick={addTask}>Add task</button>
-      </div>
-      <div className="list">
-        {list.map((task: ITask, key: number) => {
-          return <TodoTask key={key} task={task} completeTask={completeTask} />;
-        })}
-      </div>
+      <AddTask list={list} setList={setList} />
+      <TodoList list={list} setList={setList} />
     </div>
   );
 };

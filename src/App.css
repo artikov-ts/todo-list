@@ -16,7 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  flex: 30%;
+  flex: 20%;
   justify-content: center;
   align-items: center;
   background-color: darkslategray;
@@ -42,4 +42,9 @@ body {
   margin-top: 0.5rem;
   border: none;
   cursor: pointer;
+}
+
+.list {
+  flex: 80%;
+  width: 100%;
 }

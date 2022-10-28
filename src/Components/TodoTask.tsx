@@ -1,21 +1,26 @@
-import React from "react";
-import { ITask } from "../Interfaces";
+import { useDispatch } from "react-redux";
+import { removeTask } from "../features/todoSlice";
 
 interface Props {
-  task: ITask;
-  completeTask(taskNameToDelete: string): void;
+  task: any;
 }
 
-const TodoTask = ({ task, completeTask }: Props) => {
+const TodoTask = ({ task }: Props) => {
+  const dispatch = useDispatch();
+
+  const handleRemove = (taskToRemove: string) => {
+    dispatch(removeTask(taskToRemove));
+  };
+
   return (
     <div className="task">
       <div className="content">
-        <span>{task.taskName}</span>
+        <span>{task.task}</span>
         <span>{task.deadline}</span>
       </div>
       <button
         onClick={() => {
-          completeTask(task.taskName);
+          handleRemove(task.task);
         }}
       >
         X

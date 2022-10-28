@@ -1,14 +1,30 @@
 import React, { ChangeEvent, useState } from "react";
-import { ITask } from "../Interfaces";
+// import { ITask } from "../Interfaces";
 
-interface Props {
-  list: ITask[];
-  setList([]): void;
-}
+import { useDispatch } from "react-redux";
+import { saveTask } from "../features/todoSlice";
 
-const AddTask = ({ list, setList }: Props) => {
+// interface Props {
+//   list: ITask[];
+//   // setList([]): void;
+// }
+
+const AddTask = () => {
   const [task, setTask] = useState<string>("");
   const [deadline, setDeadline] = useState<number>(0);
+
+  const dispatch = useDispatch();
+
+  const addTodoTask = () => {
+    console.log(`adding ${task} and ${deadline}`);
+    dispatch(
+      saveTask({
+        task: task,
+        deadline: deadline,
+      })
+    );
+  };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (e.target.name === "task") {
       setTask(e.target.value);
@@ -17,12 +33,12 @@ const AddTask = ({ list, setList }: Props) => {
     }
   };
 
-  const addTask = (): void => {
-    const newTask = { taskName: task, deadline: deadline };
-    setList([...list, newTask]);
-    setTask("");
-    setDeadline(0);
-  };
+  // const addTask = (): void => {
+  //   const newTask = { taskName: task, deadline: deadline };
+  //   setList([...list, newTask]);
+  //   setTask("");
+  //   setDeadline(0);
+  // };
 
   return (
     <div className="header">
@@ -42,7 +58,7 @@ const AddTask = ({ list, setList }: Props) => {
           onChange={handleChange}
         />
       </div>
-      <button onClick={addTask}>Add task</button>
+      <button onClick={addTodoTask}>Add task</button>
     </div>
   );
 };
